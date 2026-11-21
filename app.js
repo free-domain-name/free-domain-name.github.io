@@ -28,6 +28,13 @@ function stumbleUrl(domain) {
   return `${STUMBLE_URL}?domain=${encodeURIComponent(domain)}`;
 }
 
+function reviewUrl(entry) {
+  const url = typeof entry.url === "string" ? entry.url : "";
+  return url.startsWith("https://github.com/") && url.includes("/discussions/")
+    ? url
+    : null;
+}
+
 function recent(entry) {
   const hasRecent = Number.isFinite(entry.recent_votes);
   const up = hasRecent ? Number(entry.recent_up) || 0 : Number(entry.up) || 0;
@@ -228,7 +235,14 @@ function renderUnreviewed(domains) {
   for (const { entry, metrics } of candidates) {
     const item = document.createElement("li");
     const link = document.createElement("a");
-    link.href = stumbleUrl(entry.domain);
+    const discussion = reviewUrl(entry);
+    link.href = discussion ?? stumbleUrl(entry.domain);
+    link.setAttribute(
+      "aria-label",
+      discussion
+        ? `${entry.domain}: open its public discussion and review it.`
+        : `${entry.domain}: open it in the browser.`,
+    );
     const name = document.createElement("span");
     name.className = "name";
     name.textContent = entry.domain;
