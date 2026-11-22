@@ -40,7 +40,7 @@ now says which is which instead of linking only one of them:
 
 | Build | Engine | Page | Packages |
 | --- | --- | --- | --- |
-| Free Domain Browser (stable) | The system web view (WebView2, WKWebView, WebKitGTK) | `/tauri-browser/` | Signed installers |
+| Free Domain Browser (stable) | The system web view (WebView2, WKWebView, WebKitGTK) | `/tauri-browser/` | Installers: DMG, MSI, NSIS, AppImage, deb |
 | Free Domain Browser — CEF (preview) | Chromium 156 through the Chromium Embedded Framework | `/free-domain-browser-cef/` | Portable archives for macOS, Linux and Windows |
 
 The **The browser, in two engines** section sits between the hero and the
