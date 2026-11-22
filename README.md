@@ -33,6 +33,26 @@ that last list into an actual first review.
   how to make that first review, and links to the registry discussions and the
   browser.
 
+## The two browser builds
+
+The project ships the Free Domain Browser in two builds, and the home page
+now says which is which instead of linking only one of them:
+
+| Build | Engine | Page | Packages |
+| --- | --- | --- | --- |
+| Free Domain Browser (stable) | The system web view (WebView2, WKWebView, WebKitGTK) | `/tauri-browser/` | Signed installers |
+| Free Domain Browser — CEF (preview) | Chromium 156 through the Chromium Embedded Framework | `/free-domain-browser-cef/` | Portable archives for macOS, Linux and Windows |
+
+The **The browser, in two engines** section sits between the hero and the
+leaderboard and gives each build its own card: the engine it uses, what it
+gives you and where to get it. The styles for those cards live in
+`styles.css` and are shared with the CEF page, which loads the same
+stylesheet from this site.
+
+The CEF page itself lives in the `docs/` folder of the
+[free-domain-browser-cef](https://github.com/free-domain-name/free-domain-browser-cef)
+repository, which publishes it with GitHub Pages.
+
 ## The onboarding flow
 
 The list of names waiting for a first review used to be a passive list. It is
