@@ -39,6 +39,7 @@
 
         <nav class="nav" aria-label="Primary">
           <a href="https://free-domain-name.github.io/tauri-browser/">Browser</a>
+          <a href="https://free-domain-name.github.io/free-domain-browser-cef/">CEF preview</a>
           <a href="https://free-domain-name.github.io/tauri-browser/stumble.html">Stumble</a>
           <a href="https://github.com/free-domain-name/registry">Registry</a>
           <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch to light theme" title="Switch theme">
@@ -103,6 +104,74 @@
             <a href="https://github.com/free-domain-name/registry/blob/main/reviews/index.json">See the data</a>.
           </p>
         </aside>
+      </section>
+
+      <section class="section wrap" id="browsers" aria-labelledby="browsers-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Two builds, one project</p>
+            <h2 id="browsers-title">The browser, in two engines.</h2>
+          </div>
+          <p class="section-meta">
+            Both check the community registry before public DNS, and both join the same chat.
+          </p>
+        </div>
+
+        <div class="build-grid">
+          <article class="build-card">
+            <div class="build-head">
+              <span class="build-tag stable">Stable</span>
+              <h3>Free Domain Browser</h3>
+              <p class="build-sub">Tauri · the system web view</p>
+            </div>
+            <p>
+              Uses the web view that is already on the machine: WebView2 on Windows, WKWebView on macOS,
+              WebKitGTK on Linux. Small download, native look, signed installers.
+            </p>
+            <ul class="build-list">
+              <li>Signed installers for macOS, Windows and Linux</li>
+              <li>Seven skins, a CSS editor and a compact density</li>
+              <li>Registry-first resolution, the claim flow and the community chat</li>
+            </ul>
+            <div class="build-actions">
+              <a class="button primary" href="https://free-domain-name.github.io/tauri-browser/">
+                Open the browser
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4"/></svg>
+              </a>
+              <a class="text-link" href="https://github.com/free-domain-name/tauri-browser/releases">
+                Installers
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M6 12l4 4 4-4"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="build-card current">
+            <div class="build-head">
+              <span class="build-tag preview">Preview</span>
+              <h3>Free Domain Browser — CEF</h3>
+              <p class="build-sub">Chromium 156, bundled</p>
+            </div>
+            <p>
+              Ships Chromium with the app, so every page is rendered by the same engine on every machine.
+              Written in Rust on the Chromium Embedded Framework, with the chrome bar as plain HTML.
+            </p>
+            <ul class="build-list">
+              <li>A real Chromium engine, with a sandboxed renderer</li>
+              <li>Portable packages for macOS, Linux and Windows</li>
+              <li>The same registry, the same claim flow and the same iroh chat</li>
+            </ul>
+            <div class="build-actions">
+              <a class="button primary" href="https://free-domain-name.github.io/free-domain-browser-cef/">
+                See the CEF build
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4"/></svg>
+              </a>
+              <a class="text-link" href="https://github.com/free-domain-name/free-domain-browser-cef/releases">
+                Preview builds
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M6 12l4 4 4-4"/></svg>
+              </a>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section class="section wrap" id="this-week" aria-labelledby="week-title">
@@ -263,6 +332,7 @@
           <a href="https://github.com/free-domain-name">GitHub</a>
           <a href="https://github.com/free-domain-name/registry/blob/main/DISCLAIMER.md">Disclaimer</a>
           <a href="https://free-domain-name.github.io/tauri-browser/">Browser</a>
+          <a href="https://free-domain-name.github.io/free-domain-browser-cef/">CEF preview</a>
         </nav>
       </div>
     </footer>
