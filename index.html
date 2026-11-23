@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://raw.githubusercontent.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://raw.githubusercontent.com https://stats.vitrn.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'" />
     <title>Free Domain Name — the free web, ranked by people</title>
     <meta name="description" content="A community registry of free domain names, with human-written reviews and a weekly leaderboard. No AI-generated domains or reviews." />
     <link rel="canonical" href="https://free-domain-name.github.io/" />
@@ -23,18 +23,20 @@
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
     <!--
-      Counting is off. Nothing leaves the page until a provider is named here.
-      To use a self-hosted GoatCounter instance, change these two values:
+      Counting runs on a self-hosted GoatCounter instance at stats.vitrn.com.
+      It sets no cookies, keeps no personal data and needs no third party
+      script. The provider and the endpoint live in the attributes below, so
+      moving to another instance is a one line change:
 
         data-provider="goatcounter"
         data-endpoint="https://<your-instance>/count"
 
-      and add that origin to the Content-Security-Policy above (connect-src for
-      the POST, script-src if the backend loads a script of its own). The other
-      providers use the same three attributes: "plausible" reads data-domain and
-      "ga4" reads the measurement id from data-endpoint.
+      and the origin has to be listed in the Content-Security-Policy above
+      under connect-src. The other providers use the same three attributes:
+      "plausible" reads data-domain and "ga4" reads the measurement id from
+      data-endpoint.
     -->
-    <script src="analytics.js" defer data-provider="none" data-endpoint="" data-domain=""></script>
+    <script src="analytics.js" defer data-provider="goatcounter" data-endpoint="https://stats.vitrn.com/count" data-domain="free-domain-name.github.io"></script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
@@ -505,6 +507,11 @@
           <a href="https://free-domain-name.github.io/tauri-browser/">Browser</a>
           <a href="https://free-domain-name.github.io/free-domain-browser-cef/">CEF preview</a>
         </nav>
+        <p class="privacy-note">
+          Page views are counted by the project's own GoatCounter instance at
+          <a href="https://stats.vitrn.com/">stats.vitrn.com</a>. It sets no
+          cookies and stores no personal data.
+        </p>
       </div>
     </footer>
 

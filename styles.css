@@ -1250,6 +1250,12 @@ h2 {
   color: var(--text);
 }
 
+.privacy-note {
+  flex-basis: 100%;
+  max-width: 62ch;
+  line-height: 1.5;
+}
+
 .noscript {
   position: fixed;
   inset: auto 12px 12px;

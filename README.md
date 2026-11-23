@@ -121,21 +121,33 @@ tag's own data attributes, so switching backend is a one-line change in
 
 | Provider | `data-provider` | `data-endpoint` | `data-domain` |
 | --- | --- | --- | --- |
-| GoatCounter | `goatcounter` | the count URL, e.g. `https://analytics.example.com/count` | unused |
+| GoatCounter | `goatcounter` | the count URL, e.g. `https://stats.example.com/count` | unused |
 | Plausible | `plausible` | the script URL, default `https://plausible.io/js/script.js` | the site to count |
 | GA4 | `ga4` | the measurement id, e.g. `G-ABC123` | unused |
 | Off | `none` | — | — |
 
-GoatCounter is the intended backend: it is open source, self-hosted, needs no
-cookies and stores no personal data. Its count endpoint takes a POST with the
-query parameters `p` (path), `r` (referrer) and `t` (title).
+GoatCounter is the backend: it is open source, self-hosted, needs no cookies
+and stores no personal data. Its count endpoint takes a POST with the query
+parameters `p` (path), `r` (referrer) and `t` (title).
 
-**Right now the page counts nothing.** The tag in `index.html` ships with
-`data-provider="none"`, so the file makes no request at all, and no third-party
-script is loaded. To switch it on, set `data-provider` and `data-endpoint` to
-the values above and add the backend origin to the Content-Security-Policy in
-`index.html` (`connect-src` for the POST, and `script-src` if the backend loads
-a script of its own).
+**The page counts against the project's own instance.** The tag in `index.html`
+reads:
+
+```html
+<script src="analytics.js" defer data-provider="goatcounter"
+        data-endpoint="https://stats.vitrn.com/count"
+        data-domain="free-domain-name.github.io"></script>
+```
+
+The instance runs on the project's own server, behind Cloudflare, and the
+dashboard is at <https://stats.vitrn.com/user/new>. It logs the path, the
+referrer, the title, the country and the browser family. It sets no cookie, it
+writes no identifier into the visitor's browser, and no third-party script is
+loaded on the page.
+
+To move to another instance, change `data-endpoint` and add the new origin to
+the Content-Security-Policy in `index.html` (`connect-src` for the POST, and
+`script-src` if the backend loads a script of its own).
 
 ## Weekly leaderboard digest
 
