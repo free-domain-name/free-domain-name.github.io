@@ -22,6 +22,19 @@
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
+    <!--
+      Counting is off. Nothing leaves the page until a provider is named here.
+      To use a self-hosted GoatCounter instance, change these two values:
+
+        data-provider="goatcounter"
+        data-endpoint="https://<your-instance>/count"
+
+      and add that origin to the Content-Security-Policy above (connect-src for
+      the POST, script-src if the backend loads a script of its own). The other
+      providers use the same three attributes: "plausible" reads data-domain and
+      "ga4" reads the measurement id from data-endpoint.
+    -->
+    <script src="analytics.js" defer data-provider="none" data-endpoint="" data-domain=""></script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
@@ -78,6 +91,19 @@
             <span aria-hidden="true">◎</span>
             No AI-generated domains. No AI-written reviews. One GitHub account, one vote.
           </p>
+          <figure class="hero-demo">
+            <img
+              src="assets/fdn-demo.gif"
+              width="800"
+              height="568"
+              alt="The Free Domain Browser CEF build opening ozkanpakdil.fdn, which resolves to the owner's GitHub Pages site."
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              The CEF build opening <code>ozkanpakdil.fdn</code>, resolved through the registry.
+            </figcaption>
+          </figure>
         </div>
 
         <aside class="hero-card" aria-label="Community snapshot">
@@ -156,7 +182,7 @@
               Written in Rust on the Chromium Embedded Framework, with the chrome bar as plain HTML.
             </p>
             <ul class="build-list">
-              <li>A real Chromium engine, with a sandboxed renderer</li>
+              <li>A real Chromium engine, with the renderer in its own process</li>
               <li>Portable packages for macOS, Linux and Windows</li>
               <li>Signed and notarized on macOS, so it opens without a prompt</li>
               <li>The same registry, the same claim flow and the same iroh chat</li>
@@ -172,6 +198,93 @@
               </a>
             </div>
           </article>
+        </div>
+      </section>
+
+      <section class="section wrap install" id="install" aria-labelledby="install-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">One command</p>
+            <h2 id="install-title">Install in one command.</h2>
+          </div>
+          <p class="section-meta">
+            The portable CEF build. No root, nothing installed system wide.
+          </p>
+        </div>
+
+        <div class="install-list">
+          <div class="install-row" data-platform="macos">
+            <div class="install-label">
+              <span class="install-os">macOS</span>
+            </div>
+            <div class="code-block copyable">
+              <code id="install-macos">curl -fsSL https://free-domain-name.github.io/install.sh | sh</code>
+              <button class="copy-button" type="button" data-copy="#install-macos" aria-live="polite">Copy</button>
+            </div>
+          </div>
+
+          <div class="install-row" data-platform="linux">
+            <div class="install-label">
+              <span class="install-os">Linux</span>
+            </div>
+            <div class="code-block copyable">
+              <code id="install-linux">curl -fsSL https://free-domain-name.github.io/install.sh | sh</code>
+              <button class="copy-button" type="button" data-copy="#install-linux" aria-live="polite">Copy</button>
+            </div>
+          </div>
+
+          <div class="install-row" data-platform="windows">
+            <div class="install-label">
+              <span class="install-os">Windows</span>
+            </div>
+            <div class="code-block copyable">
+              <code id="install-windows">irm https://free-domain-name.github.io/install.ps1 | iex</code>
+              <button class="copy-button" type="button" data-copy="#install-windows" aria-live="polite">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="install-foot">
+          <div class="install-what">
+            <p class="eyebrow">What it does</p>
+            <h3>Download, verify, unpack.</h3>
+            <p>
+              The script downloads the latest portable CEF build, checks its SHA-256 against the
+              published checksums.txt, and unpacks it into your home directory:
+              <code>~/Applications</code> on macOS,
+              <code>~/.local/share/free-domain-browser</code> on Linux,
+              <code>%LOCALAPPDATA%\Programs\FreeDomainBrowser</code> on Windows.
+            </p>
+            <p>
+              It needs no root and installs nothing system wide: no daemon, no service, no
+              package manager, and nothing is left running. Each script is one readable file, so
+              you can read it before you run it.
+            </p>
+          </div>
+
+          <aside class="panel install-alt">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">The other way</p>
+                <h2>Signed installers</h2>
+              </div>
+              <span class="panel-mark" aria-hidden="true">↓</span>
+            </div>
+            <p>
+              DMG, MSI, NSIS, AppImage and deb packages are on the releases pages. The macOS
+              build is signed and notarized.
+            </p>
+            <div class="build-actions">
+              <a class="text-link" href="https://github.com/free-domain-name/free-domain-browser-cef/releases">
+                CEF releases
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M6 12l4 4 4-4"/></svg>
+              </a>
+              <a class="text-link" href="https://github.com/free-domain-name/tauri-browser/releases">
+                Stable releases
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M6 12l4 4 4-4"/></svg>
+              </a>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -277,6 +390,63 @@
             <p>Write what you found — where it goes, what it serves, what surprised you. Short and honest beats long and confident.</p>
           </li>
         </ol>
+      </section>
+
+      <section class="section wrap claim" id="claim" aria-labelledby="claim-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Claim a name</p>
+            <h2 id="claim-title">Claim your .fdn name.</h2>
+          </div>
+          <p class="section-meta">
+            Four steps: one pull request, one file, one human review.
+          </p>
+        </div>
+
+        <div class="claim-grid">
+          <div class="claim-side">
+            <div class="code-block copyable">
+              <code id="claim-json">{
+  "domain": "example.fdn",
+  "target_url": "https://example.com",
+  "owner_github": "username",
+  "ttl": 3600
+}</code>
+              <button class="copy-button" type="button" data-copy="#claim-json" aria-live="polite">Copy</button>
+            </div>
+            <p class="claim-note">
+              One file, four fields, nothing else in it. Submissions are read by people, not
+              merged by a bot, and bulk submissions are rejected.
+            </p>
+            <p class="claim-links">
+              <a href="https://github.com/free-domain-name/registry">Registry repo</a>
+              <a href="https://github.com/free-domain-name/registry/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>
+            </p>
+          </div>
+
+          <ol class="claim-steps">
+            <li class="rule">
+              <span class="rule-number">01</span>
+              <h3>Open a pull request</h3>
+              <p>Fork the registry, add one JSON file for your name, and open a pull request against free-domain-name/registry.</p>
+            </li>
+            <li class="rule">
+              <span class="rule-number">02</span>
+              <h3>Follow the shard rule</h3>
+              <p>The path comes from the registry's scripts/shard.mjs: drop the dots, take the first four characters as four directory names, then put the file inside. ozkanpakdil.fdn becomes o/z/k/a/ozkanpakdil.fdn.json.</p>
+            </li>
+            <li class="rule">
+              <span class="rule-number">03</span>
+              <h3>Point at a domain you own</h3>
+              <p>target_url is an http(s) origin with no path, and ttl is a number between 60 and 86400. The name has to be yours to point at.</p>
+            </li>
+            <li class="rule">
+              <span class="rule-number">04</span>
+              <h3>Let people review it</h3>
+              <p>The pull request opens a discussion titled with the bare domain, for example example.fdn. The community votes there, and a maintainer merges the file.</p>
+            </li>
+          </ol>
+        </div>
       </section>
 
       <section id="how-ranking" class="section wrap how" aria-labelledby="how-title">

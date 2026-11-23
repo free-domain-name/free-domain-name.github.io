@@ -7,6 +7,12 @@ const STUMBLE_URL =
   "https://free-domain-name.github.io/tauri-browser/stumble.html";
 const THEME_KEY = "fdn.theme";
 
+const INSTALL_COMMANDS = {
+  macos: "curl -fsSL https://free-domain-name.github.io/install.sh | sh",
+  linux: "curl -fsSL https://free-domain-name.github.io/install.sh | sh",
+  windows: "irm https://free-domain-name.github.io/install.ps1 | iex",
+};
+
 const els = {
   leaderboard: document.querySelector("#leaderboard"),
   discussed: document.querySelector("#discussed"),
@@ -342,8 +348,112 @@ function initTheme() {
   });
 }
 
+function detectPlatform() {
+  const agent = `${navigator.userAgent || ""} ${navigator.platform || ""}`.toLowerCase();
+  if (/android|iphone|ipad|ipod/.test(agent)) return null;
+  if (/win/.test(agent)) return "windows";
+  if (/mac os|macintosh|macintel/.test(agent)) return "macos";
+  if (/linux|x11|bsd/.test(agent)) return "linux";
+  return null;
+}
+
+function initInstall() {
+  const platform = detectPlatform();
+
+  for (const row of document.querySelectorAll(".install-row")) {
+    const key = row.dataset.platform;
+    const command = INSTALL_COMMANDS[key];
+    const code = row.querySelector("code");
+    if (command && code) code.textContent = command;
+    if (key !== platform) continue;
+
+    row.classList.add("is-detected");
+    const label = row.querySelector(".install-label");
+    if (!label) continue;
+    const tag = document.createElement("span");
+    tag.className = "build-tag stable";
+    tag.textContent = "Your platform";
+    label.append(tag);
+  }
+}
+
+async function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fall through to the execCommand path.
+    }
+  }
+  return copyWithExecCommand(text);
+}
+
+function copyWithExecCommand(text) {
+  try {
+    const area = document.createElement("textarea");
+    area.value = text;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.top = "0";
+    area.style.left = "-9999px";
+    document.body.append(area);
+    area.select();
+    const copied = document.execCommand("copy");
+    area.remove();
+    return copied;
+  } catch {
+    return false;
+  }
+}
+
+function selectText(node) {
+  try {
+    const selection = window.getSelection();
+    if (!selection) return;
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  } catch {
+    // Nothing else to try.
+  }
+}
+
+function flashCopy(button, label) {
+  const original = button.dataset.label || button.textContent.trim();
+  button.dataset.label = original;
+  button.textContent = label;
+  button.classList.add("is-copied");
+
+  clearTimeout(button.copyTimer);
+  button.copyTimer = setTimeout(() => {
+    button.textContent = original;
+    button.classList.remove("is-copied");
+  }, 1800);
+}
+
+function initCopyButtons() {
+  for (const button of document.querySelectorAll(".copy-button")) {
+    const selector = button.dataset.copy;
+    if (!selector) continue;
+
+    button.addEventListener("click", async () => {
+      const target = document.querySelector(selector);
+      if (!target) return;
+
+      const text = (target.textContent || "").trim();
+      const copied = await copyText(text);
+      if (!copied) selectText(target);
+      flashCopy(button, copied ? "Copied" : "Selected");
+    });
+  }
+}
+
 async function load() {
   initTheme();
+  initInstall();
+  initCopyButtons();
 
   try {
     const response = await fetch(INDEX_URL, {
